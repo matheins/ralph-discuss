@@ -1,12 +1,21 @@
-// Provider types (aligned with AI SDK)
-export type ProviderId = 'openai' | 'anthropic' | 'ollama';
-
-export interface ModelConfig {
-  id: string;
-  name: string;
-  providerId: ProviderId;
-  description?: string;
-}
+// Re-export AI types
+export type {
+  ProviderId,
+  AuthStatus,
+  ConnectionStatus,
+  ProviderConfig,
+  ProviderState,
+  ModelCapabilities,
+  ModelInfo,
+  NormalizedMessage,
+  GenerationRequest,
+  GenerationResponse,
+  StreamOptions,
+  RateLimitConfig,
+  RateLimitState,
+  ProviderErrorCode,
+  ProviderError,
+} from '@/lib/ai';
 
 // Discussion types
 export interface DiscussionMessage {
@@ -15,8 +24,15 @@ export interface DiscussionMessage {
   content: string;
   modelId: string;
   modelName: string;
+  providerId: string;
   timestamp: number;
   isConsensusCheck?: boolean;
+  tokenUsage?: {
+    promptTokens: number;
+    completionTokens: number;
+    totalTokens: number;
+  };
+  durationMs?: number;
 }
 
 export interface DiscussionState {
@@ -30,8 +46,16 @@ export interface DiscussionState {
 
 export interface DiscussionConfig {
   prompt: string;
-  modelA: ModelConfig;
-  modelB: ModelConfig;
+  modelA: {
+    id: string;
+    name: string;
+    providerId: string;
+  };
+  modelB: {
+    id: string;
+    name: string;
+    providerId: string;
+  };
   maxIterations: number;
   temperature: number;
 }
@@ -40,7 +64,9 @@ export interface DiscussionConfig {
 export interface StartDiscussionRequest {
   prompt: string;
   modelAId: string;
+  modelAProviderId: string;
   modelBId: string;
+  modelBProviderId: string;
   maxIterations?: number;
   temperature?: number;
 }
@@ -51,6 +77,7 @@ export interface StreamEvent {
     content?: string;
     role?: 'model-a' | 'model-b';
     modelId?: string;
+    providerId?: string;
     consensusSolution?: string;
     error?: string;
   };

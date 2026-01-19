@@ -1,6 +1,16 @@
-import type { ModelConfig, ProviderId } from '@/types';
+import type { ProviderId } from './core/types';
 
-export const AVAILABLE_MODELS: ModelConfig[] = [
+// Simple model list for UI display (without full capabilities info)
+// For detailed model info, use the provider's getAvailableModels()
+
+export interface SimpleModelConfig {
+  id: string;
+  name: string;
+  providerId: ProviderId;
+  description?: string;
+}
+
+export const AVAILABLE_MODELS: SimpleModelConfig[] = [
   // OpenAI Models
   {
     id: 'gpt-4o',
@@ -41,10 +51,10 @@ export const AVAILABLE_MODELS: ModelConfig[] = [
   },
 ];
 
-export function getModelById(modelId: string): ModelConfig | undefined {
+export function getModelById(modelId: string): SimpleModelConfig | undefined {
   return AVAILABLE_MODELS.find((m) => m.id === modelId);
 }
 
-export function getModelsByProvider(providerId: ProviderId): ModelConfig[] {
+export function getModelsByProvider(providerId: ProviderId): SimpleModelConfig[] {
   return AVAILABLE_MODELS.filter((m) => m.providerId === providerId);
 }
