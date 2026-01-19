@@ -8,6 +8,7 @@ import { MessageList } from './message-list';
 import { ConsensusCard } from './consensus-card';
 import { DiscussionControls } from './discussion-controls';
 import { ErrorDisplay } from './error-display';
+import { SettingsDialog } from '@/components/settings/settings-dialog';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { LAYOUT } from '@/config/ui-constants';
@@ -36,11 +37,16 @@ export function DiscussionContainer() {
       <div className={`${LAYOUT.containerPadding} ${LAYOUT.maxMessageWidth} mx-auto py-8`}>
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl">ralph-discuss</CardTitle>
-            <p className="text-gray-600 dark:text-gray-400">
-              Select two AI models and enter a prompt. The models will discuss and
-              collaborate to find the best solution.
-            </p>
+            <div className="flex items-start justify-between">
+              <div>
+                <CardTitle className="text-2xl">ralph-discuss</CardTitle>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Select two AI models and enter a prompt. The models will discuss and
+                  collaborate to find the best solution.
+                </p>
+              </div>
+              <SettingsDialog />
+            </div>
           </CardHeader>
           <CardContent className={LAYOUT.sectionGap}>
             {/* Model Selection */}
